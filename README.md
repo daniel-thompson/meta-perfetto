@@ -8,20 +8,13 @@ Patches
 Please submit any patches against the meta-perfetto layer as a pull request on
 the corresponding github project: https://github.com/daniel-thompson/meta-perfetto .
 
-Table of Contents
-=================
+Adding the meta-perfetto layer to your build
+============================================
 
-  I. Adding the meta-perfetto layer to your build
- II. Misc
+Run `bitbake-layers add-layer meta-perfetto`
 
-
-I. Adding the meta-perfetto layer to your build
-=================================================
-
-Run 'bitbake-layers add-layer meta-perfetto'
-
-II. Misc
-========
+Using perfetto
+==============
 
 meta-perfetto is a simple two-recipe layer that packages just enough of perfetto
 to allow us to run the data capture tools on the target device. It can be combined
