@@ -1,0 +1,48 @@
+From ed3eb7aa19d6ec2ce34bf22abfcaab62d5244744 Mon Sep 17 00:00:00 2001
+From: Daniel Thompson <daniel@redfelineninja.org.uk>
+Date: Sat, 30 Oct 2021 08:23:02 +0000
+Subject: [PATCH] NOUPSTREAM: Autogenerate recipe fragments from the build deps
+
+Signed-off-by: Daniel Thompson <daniel@redfelineninja.org.uk>
+---
+ tools/build_deps.py       |  1 +
+ tools/generate-build-deps | 21 +++++++++++++++++++++
+ 2 files changed, 22 insertions(+)
+ create mode 120000 tools/build_deps.py
+ create mode 100755 tools/generate-build-deps
+
+diff --git a/tools/build_deps.py b/tools/build_deps.py
+new file mode 120000
+index 000000000..bc2cb8a32
+--- /dev/null
++++ b/tools/build_deps.py
+@@ -0,0 +1 @@
++install-build-deps
+\ No newline at end of file
+diff --git a/tools/generate-build-deps b/tools/generate-build-deps
+new file mode 100755
+index 000000000..0536cba0b
+--- /dev/null
++++ b/tools/generate-build-deps
+@@ -0,0 +1,21 @@
++#!/usr/bin/env python3
++
++import os
++
++import build_deps as deps
++
++for dep in deps.BUILD_DEPS_HOST:
++	if dep.source_url.startswith('https://') and dep.source_url.endswith('.git'):
++		name = os.path.basename(dep.target_folder)
++		print(f'#SRC_URI += "git{dep.source_url[5:]};protocol=https;nobranch=1;name={name};destsuffix=git/{dep.target_folder}"')
++		print(f'#SRCREV_{name} = "{dep.checksum}"')
++	elif dep.source_url.startswith('https://') and dep.source_url.endswith('.zip'):
++		target_folder = dep.target_folder[:-4]
++		dirname = os.path.dirname(target_folder)
++		name = os.path.basename(target_folder)
++		print(f'#SRC_URI += "{dep.source_url};name={name};subdir=git/buildtools"')
++		print(f'#SRC_URI[{name}.sha256sum] = "{dep.checksum}"')
++		print( '#do_configure_append () {')
++		print(f'#	(cd {dirname} && ln -fs {name}-* {name})')
++		print( '#}')
++	print('')

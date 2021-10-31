@@ -1,0 +1,22 @@
+From 9fa118cb734e8c25e13fca464ad3c4c6a3a40383 Mon Sep 17 00:00:00 2001
+From: Daniel Thompson <daniel@redfelineninja.org.uk>
+Date: Sat, 30 Oct 2021 08:40:24 +0000
+Subject: [PATCH] NOUPSTREAM: Disable -Werror
+
+---
+ gn/standalone/BUILD.gn | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gn/standalone/BUILD.gn b/gn/standalone/BUILD.gn
+index 6660963c4..aee99923f 100644
+--- a/gn/standalone/BUILD.gn
++++ b/gn/standalone/BUILD.gn
+@@ -188,7 +188,7 @@ config("default") {
+     if (is_win) {
+       cflags += [ "/WX" ]
+     } else {
+-      cflags += [ "-Werror" ]
++      #cflags += [ "-Werror" ]
+     }
+   }
+ 
