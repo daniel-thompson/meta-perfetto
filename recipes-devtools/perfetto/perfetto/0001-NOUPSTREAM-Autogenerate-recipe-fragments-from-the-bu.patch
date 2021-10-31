@@ -42,7 +42,7 @@ index 000000000..0536cba0b
 +		name = os.path.basename(target_folder)
 +		print(f'#SRC_URI += "{dep.source_url};name={name};subdir=git/buildtools"')
 +		print(f'#SRC_URI[{name}.sha256sum] = "{dep.checksum}"')
-+		print( '#do_configure_append () {')
++		print( '#do_configure:append () {')
 +		print(f'#	(cd {dirname} && ln -fs {name}-* {name})')
 +		print( '#}')
 +	print('')

@@ -13,6 +13,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=f87516e0b698007e9e75a1fe1012b390"
 SRC_URI = "git://android.googlesource.com/platform/external/perfetto;protocol=https;branch=master \
            file://0001-NOUPSTREAM-Autogenerate-recipe-fragments-from-the-bu.patch \
            file://0002-NOUPSTREAM-Disable-Werror.patch \
+           file://0003-pbtxt_to_pb-Add-missing-include.patch \
            "
 
 SRCREV = "e5fc9f62634b179a6ced07fd2f565a9cee70f5bd"
@@ -21,6 +22,7 @@ UPSTREAM_VERSION_UNKNOWN = "1"
 S = "${WORKDIR}/git"
 
 do_configure () {
+	# All indentation here *must* use spaces rather than tabs
 	gn gen --args="\
             target_cpu=\"arm64\" \
             target_os=\"linux\" \
@@ -56,7 +58,7 @@ do_install () {
 	ln -s /home/root/perfetto-traces ${D}/data/misc/perfetto-traces
 }
 
-FILES_${PN} += "/home/root /data/misc"
+FILES:${PN} += "/home/root /data/misc"
 
 #
 # AUTO-GENERATED DEPENDENCIES
@@ -79,7 +81,7 @@ FILES_${PN} += "/home/root /data/misc"
 
 #SRC_URI += "https://storage.googleapis.com/perfetto/libbacktrace-177940370e4a6b2509e92a0aaa9749184e64af43.zip;name=libbacktrace;subdir=git/buildtools"
 #SRC_URI[libbacktrace.sha256sum] = "21ac9a4209f7aeef766c482be53a7fa365063c031c7077e2070b491202983b31"
-#do_configure_append () {
+#do_configure:append () {
 #	(cd buildtools/ && ln -s libbacktrace-* libbacktrace)
 #}
 
@@ -106,13 +108,13 @@ SRCREV_libunwind = "d999d54f4bca789543a2eb6c995af2d9b5a1f3ed"
 
 SRC_URI += "https://storage.googleapis.com/perfetto/libbacktrace-177940370e4a6b2509e92a0aaa9749184e64af43.zip;name=libbacktrace;subdir=git/buildtools"
 SRC_URI[libbacktrace.sha256sum] = "21ac9a4209f7aeef766c482be53a7fa365063c031c7077e2070b491202983b31"
-do_configure_append () {
+do_configure:append () {
 	(cd buildtools && ln -fs libbacktrace-* libbacktrace)
 }
 
 #SRC_URI += "https://storage.googleapis.com/perfetto/sqlite-amalgamation-3350400.zip;name=sqlite;subdir=git/buildtools"
 #SRC_URI[sqlite.sha256sum] = "f3bf0df69f5de0675196f4644e05d07dbc698d674dc563a12eff17d5b215cdf5"
-#do_configure_append () {
+#do_configure:append () {
 #	(cd buildtools && ln -s sqlite-* sqlite)
 #}
 
@@ -148,7 +150,7 @@ SRCREV_zlib = "5c85a2da4c13eda07f69d81a1579a5afddd35f59"
 
 #SRC_URI += "https://storage.googleapis.com/perfetto/test-data-20210909-141933.zip;name=data;subdir=git/buildtools"
 #SRC_URI[data.sha256sum] = "95597358b8d434338815731948cf2bb96e2015b8595f05c37c053c2e11f11408"
-#do_configure_append () {
+#do_configure:append () {
 #	(cd test && ln -s data-* data)
 #}
 
@@ -157,6 +159,6 @@ SRCREV_zlib = "5c85a2da4c13eda07f69d81a1579a5afddd35f59"
 
 #SRC_URI += "https://storage.googleapis.com/perfetto/bloaty-1.1-b3b829de35babc2fe831b9488ad2e50bca939412-mac.zip;name=bloaty;subdir=git/buildtools"
 #SRC_URI[bloaty.sha256sum] = "2d301bd72a20e3f42888c9274ceb4dca76c103608053572322412c2c65ab8cb8"
-#do_configure_append () {
+#do_configure:append () {
 #	(cd buildtools && ln -s bloaty-* bloaty)
 #}

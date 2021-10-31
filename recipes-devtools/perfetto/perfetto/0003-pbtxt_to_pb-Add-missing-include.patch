@@ -1,0 +1,24 @@
+From 597d62aecf055115ead11838211ebeb5a20cfcf0 Mon Sep 17 00:00:00 2001
+From: Daniel Thompson <daniel@redfelineninja.org.uk>
+Date: Sun, 31 Oct 2021 09:38:25 +0000
+Subject: [PATCH] pbtxt_to_pb: Add missing include
+
+Looks like older C++ stdlib pulled in <limits> from within another header
+(although I didn't check this explicitly). Anyhow, after updating OE-core,
+we must add an extra include here.
+---
+ src/perfetto_cmd/pbtxt_to_pb.cc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/perfetto_cmd/pbtxt_to_pb.cc b/src/perfetto_cmd/pbtxt_to_pb.cc
+index b78d93829..74205026c 100644
+--- a/src/perfetto_cmd/pbtxt_to_pb.cc
++++ b/src/perfetto_cmd/pbtxt_to_pb.cc
+@@ -16,6 +16,7 @@
+ 
+ #include <ctype.h>
+ 
++#include <limits>
+ #include <map>
+ #include <set>
+ #include <stack>
